@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
-import { useState, useTransition } from "react";
+import { useState, useTransition, useEffect } from "react";
 import Authcard from "./authcard";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -27,6 +27,7 @@ function SigninForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
+  const [shouldRedirect, setShouldRedirect] = useState(false);
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
 
@@ -38,6 +39,13 @@ function SigninForm() {
     },
   });
 
+  useEffect(() => {
+    if (shouldRedirect) {
+      window.location.reload();
+      router.push("/onboard");
+    }
+  }, [shouldRedirect, router]);
+
   function onSubmit(values: z.infer<typeof SignInSchema>) {
     setError("");
     setSuccess("");
@@ -48,9 +56,9 @@ function SigninForm() {
 
         if (response.data.success === true) {
           setSuccess(response.data.success);
-          window.location.reload();
-          router.push("/onboard");
+          setShouldRedirect(true);
         }
+
         if (response.status === 201) {
           setSuccess(response.data.success);
         }
@@ -61,7 +69,7 @@ function SigninForm() {
 
         return response.data;
       } catch (error) {
-        // @ts-expect-error error response
+        // @ts-expect-error error
         setError(error.response?.data?.error);
       }
     });
@@ -93,6 +101,7 @@ function SigninForm() {
               </FormItem>
             )}
           />
+
           <FormField
             control={form.control}
             name='password'
@@ -100,7 +109,7 @@ function SigninForm() {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <div className=' dark:bg-black bg-white dark:text-white text-black relative'>
+                  <div className='dark:bg-black bg-white dark:text-white text-black relative'>
                     <Input
                       disabled={isPending}
                       className='dark:bg-black bg-white dark:text-white text-black focus:dark:bg-black focus:bg-white active:dark:bg-black active:bg-white'
@@ -126,8 +135,10 @@ function SigninForm() {
               </FormItem>
             )}
           />
+
           <FormSuccess message={success} />
           <FormError message={error} />
+
           <Button
             type='submit'
             disabled={isPending}
@@ -136,6 +147,7 @@ function SigninForm() {
           </Button>
         </form>
       </Form>
+
       <div className='mt-6 space-y-3'>
         <div className='relative'>
           <div className='absolute inset-0 flex items-center'>
@@ -147,6 +159,7 @@ function SigninForm() {
             </span>
           </div>
         </div>
+
         <Button
           type='button'
           onClick={() => nextAuthSignIn("google", { redirectTo: "/dashboard" })}
