@@ -43,8 +43,6 @@ export async function POST(request: NextRequest) {
     await signIn("credentials", {
       email,
       password,
-      redirectTo: DEFAULT_LOGIN_REDIRECT,
-      redirect: true,
     });
 
     return NextResponse.json({ success: true }, { status: 200 });
