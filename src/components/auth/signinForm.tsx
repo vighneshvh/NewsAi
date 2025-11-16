@@ -45,10 +45,10 @@ function SigninForm() {
     startTransition(async () => {
       try {
         const response = await axios.post("/api/signin", values);
-        console.log(response.data);
+
         if (response.status === 200) {
-          router.push("/onboard");
           window.location.reload();
+          router.push("/onboard");
         }
         if (response.status === 201) {
           setSuccess(response.data.success);
