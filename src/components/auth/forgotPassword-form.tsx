@@ -36,7 +36,7 @@ function ForgotPasswordForm() {
     },
   });
 
-  function onSubmit(values: any) {
+  function onSubmit(values: z.infer<typeof resetPasswordSchema>) {
     setError("");
     setSuccess("");
 
@@ -51,7 +51,7 @@ function ForgotPasswordForm() {
         if (response.data?.error) {
           setError(response.data.error);
         }
-      } catch (error) {
+      } catch {
         setError("Something went wrong. Please try again.");
       }
     });

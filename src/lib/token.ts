@@ -12,8 +12,7 @@ import {
 } from "@/lib/userQueries";
 import { generateOTP } from "./helpers";
 import { eq } from "drizzle-orm";
-import { drizzle } from "drizzle-orm/postgres-js";
-import postgres from "postgres";
+
 import { db } from "@/db";
 
 
