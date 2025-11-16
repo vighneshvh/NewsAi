@@ -44,12 +44,10 @@ export async function POST(request: NextRequest) {
       email,
       password,
       redirectTo: DEFAULT_LOGIN_REDIRECT,
+      redirect: true,
     });
 
-    return NextResponse.json(
-      { success: "Signed In Successfully" },
-      { status: 200 }
-    );
+    return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.message) {

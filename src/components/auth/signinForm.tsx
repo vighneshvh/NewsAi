@@ -46,7 +46,8 @@ function SigninForm() {
       try {
         const response = await axios.post("/api/signin", values);
 
-        if (response.status === 200) {
+        if (response.data.success === true) {
+          setSuccess(response.data.success);
           window.location.reload();
           router.push("/onboard");
         }
