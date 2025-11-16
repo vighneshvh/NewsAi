@@ -1,17 +1,20 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { testimonials } from "@/lib/constants";
 import { QuoteIcon } from "lucide-react";
+import Image from "next/image";
 
 export default function Testimonials() {
   return (
-    <section id='testimonials' className='py-20 bg-muted/30 dark:bg-muted/5'>
+    <section
+      id='testimonials'
+      className='py-20 md:py-28 bg-muted/30 dark:bg-muted/5'>
       <div className='container px-4 md:px-6'>
-        <div className='text-center mb-12'>
+        <div className='text-center mb-16'>
           <h2 className='text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl'>
-            Trusted by Businesses Worldwide
+            Loved by Readers Everywhere
           </h2>
-          <p className='mt-4 text-xl text-muted-foreground max-w-[700px] mx-auto'>
-            See what our customers have to say about AutoCRM
+          <p className='mt-4 text-lg text-muted-foreground max-w-[700px] mx-auto'>
+            Discover how NewsAi is helping people stay informed and save time
           </p>
         </div>
 
@@ -25,9 +28,11 @@ export default function Testimonials() {
                   {testimonial.author.image && (
                     <div className='mr-4'>
                       <div className='h-12 w-12 rounded-full overflow-hidden'>
-                        <img
+                        <Image
                           src={testimonial.author.image || "/placeholder.svg"}
                           alt={testimonial.author.name}
+                          width={48}
+                          height={48}
                           className='h-full w-full object-cover'
                         />
                       </div>

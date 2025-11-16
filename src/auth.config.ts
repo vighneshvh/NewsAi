@@ -1,4 +1,3 @@
-import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
 
 import Credentials from "next-auth/providers/credentials";
@@ -6,20 +5,16 @@ import Credentials from "next-auth/providers/credentials";
 import type { NextAuthConfig } from "next-auth";
 import { SignInSchema } from "./lib/schema";
 import { getUserByEmail } from "./lib/userQueries";
-import { compare, hash } from "bcryptjs";
+import { compare } from "bcryptjs";
 
 export default {
   providers: [
-    GitHub({
-      clientId: process.env.GITHUB_CLIENT_ID,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    }),
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
     Credentials({
-      // @ts-ignore
+      // @ts-expect-error error
       async authorize(credentials) {
         const validateFields = SignInSchema.safeParse(credentials);
 

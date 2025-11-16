@@ -5,34 +5,34 @@ export type FAQItem = {
 
 export const faqItems: FAQItem[] = [
   {
-    question: "How does the AI agent automation work?",
+    question: "How do I subscribe to news topics?",
     answer:
-      "Our AI agents use natural language processing and machine learning to understand customer inquiries, provide relevant responses, and take appropriate actions. They learn from each interaction to continuously improve their performance and can be customized to match your brand voice and business rules.",
+      "Simply browse our extensive library of domains and keywords, and click subscribe on the ones you're interested in. Your personalized feed will instantly populate with relevant news articles. You can manage your subscriptions anytime from your dashboard.",
   },
   {
-    question: "Can I integrate AutoCRM with my existing tools?",
+    question: "Can I subscribe to multiple domains and keywords?",
     answer:
-      "Yes, AutoCRM offers seamless integration with popular business tools including Salesforce, HubSpot, Slack, Microsoft Teams, Google Workspace, and many more. We also provide an API for custom integrations with your proprietary systems.",
+      "Absolutely! Subscribe to as many domains and keywords as you want. Our smart algorithm will aggregate all relevant news and display them in your personalized feed, organized by topic and recency.",
   },
   {
-    question: "Is my customer data secure?",
+    question: "How often is the news feed updated?",
     answer:
-      "Absolutely. We implement bank-level encryption, regular security audits, and comply with GDPR, CCPA, and other data protection regulations. Your data is stored in SOC 2 compliant data centers, and we offer data residency options for businesses with specific geographic requirements.",
+      "Your feed is updated in real-time as new articles are published. We continuously crawl thousands of news sources worldwide to ensure you never miss important updates on topics you care about.",
   },
   {
-    question: "How long does it take to implement AutoCRM?",
+    question: "Can I customize my feed preferences?",
     answer:
-      "Most customers are up and running within 1-2 weeks. Our onboarding team will guide you through the setup process, help with data migration, and provide training for your team. For enterprise customers with complex requirements, we offer custom implementation plans.",
+      "Yes! You can customize notification frequency, filter by source credibility, set reading time preferences, and choose how articles are sorted. Our AI learns your preferences over time to improve recommendations.",
   },
   {
-    question: "Do you offer a free trial?",
+    question: "Is there a free version available?",
     answer:
-      "Yes, we offer a 14-day free trial with full access to all features. No credit card is required to start your trial. You can also request a personalized demo to see how AutoCRM can address your specific business needs.",
+      "Yes, we offer a free tier with up to 5 subscriptions and basic features. Premium plans unlock unlimited subscriptions, advanced filtering, and exclusive features like saved articles and reading history.",
   },
   {
-    question: "How does billing work?",
+    question: "Can I export or save articles?",
     answer:
-      "We offer monthly and annual billing options, with a 20% discount for annual plans. You can upgrade, downgrade, or cancel your subscription at any time. We also offer custom enterprise pricing for large organizations with specific requirements.",
+      "Absolutely! Save articles to your personal library, export them as PDF, or share them with colleagues. Premium users get unlimited storage and advanced organization features.",
   },
 ];
 
@@ -49,68 +49,58 @@ export type FeatureItem = {
 
 export const features: FeatureItem[] = [
   {
-    title: "AI Agent Automation",
+    title: "Smart Subscriptions",
     description:
-      "Our intelligent agents handle routine customer interactions, schedule follow-ups, and provide personalized responses based on customer history and preferences.",
-    icon: "Bot",
-    size: "large",
-    image: {
-      src: "/placeholder.svg?height=300&width=600",
-      alt: "AI Agent Dashboard",
-    },
+      "Subscribe to domains and keywords to get a curated feed of relevant news articles tailored to your interests.",
+    icon: "Rss",
   },
   {
-    title: "Advanced Analytics",
+    title: "Real-Time Updates",
     description:
-      "Gain insights from customer data with powerful analytics and visualization tools.",
-    icon: "BarChart3",
+      "Get instant notifications when new articles matching your interests are published. Never miss breaking news.",
+    icon: "Bell",
   },
   {
-    title: "Customer Segmentation",
+    title: "Advanced Filtering",
     description:
-      "Automatically segment customers based on behavior, preferences, and engagement.",
-    icon: "Users",
+      "Filter by source credibility, publication date, content length, and more. Customize your feed exactly how you want it.",
+    icon: "Filter",
   },
   {
-    title: "Smart Conversations",
+    title: "Personalized Feed",
     description:
-      "AI-powered chat that understands context and customer history for better interactions.",
-    icon: "MessageSquare",
+      "AI-powered recommendations that learn from your reading habits and preferences to surface the most relevant stories.",
+    icon: "Sparkles",
   },
   {
-    title: "Automated Scheduling",
+    title: "Save & Organize",
     description:
-      "Let AI handle appointment scheduling and follow-ups with smart calendar integration.",
-    icon: "Calendar",
+      "Save articles to your personal library, create custom collections, and organize by tags for easy reference.",
+    icon: "Bookmark",
   },
   {
-    title: "Workflow Automation",
+    title: "Multi-Source Aggregation",
     description:
-      "Create custom workflows that automate repetitive tasks, trigger actions based on customer behavior, and ensure consistent follow-up. Our drag-and-drop workflow builder makes it easy to design complex automation without coding.",
-    icon: "Zap",
-    size: "wide",
-    image: {
-      src: "/placeholder.svg?height=200&width=500",
-      alt: "Workflow Automation",
-    },
+      "We aggregate news from thousands of trusted sources worldwide. Get comprehensive coverage from multiple perspectives.",
+    icon: "Globe",
   },
   {
-    title: "Predictive Insights",
+    title: "Search & Discovery",
     description:
-      "Forecast customer needs and identify opportunities with AI-powered predictions.",
-    icon: "LineChart",
+      "Powerful search capabilities to find articles by keyword, date range, source, or topic. Discover trending stories.",
+    icon: "Search",
   },
   {
-    title: "Email Campaigns",
+    title: "Export & Share",
     description:
-      "Create and automate personalized email campaigns with AI-generated content.",
-    icon: "Mail",
+      "Export articles as PDF, share with colleagues, or integrate with your workflow tools. Full control over your content.",
+    icon: "Share2",
   },
   {
-    title: "Enterprise Security",
+    title: "Privacy First",
     description:
-      "Bank-level encryption and compliance features to keep your customer data safe.",
-    icon: "ShieldCheck",
+      "Your reading history and preferences are private. We never sell your data. Full control over your privacy settings.",
+    icon: "Lock",
   },
 ];
 
@@ -180,46 +170,47 @@ export type PricingPlan = {
 
 export const pricingPlans: PricingPlan[] = [
   {
-    name: "Starter",
-    description: "For small businesses",
-    price: 49,
+    name: "Free",
+    description: "Perfect to get started",
+    price: 0,
     features: [
-      "1 AI agent",
-      "Up to 500 contacts",
-      "Basic analytics",
-      "Email support",
-      "5 automation workflows",
+      "Up to 5 subscriptions",
+      "Basic news feed",
+      "Standard notifications",
+      "Community support",
+      "7-day article history",
     ],
     buttonText: "Get Started",
     buttonVariant: "outline",
   },
   {
-    name: "Professional",
-    description: "For growing teams",
-    price: 99,
+    name: "Pro",
+    description: "For power users",
+    price: 9,
     popular: true,
     features: [
-      "3 AI agents",
-      "Up to 2,500 contacts",
-      "Advanced analytics",
-      "Priority support",
-      "20 automation workflows",
-      "Custom integrations",
+      "Unlimited subscriptions",
+      "Advanced filtering & search",
+      "Priority notifications",
+      "Email support",
+      "Unlimited article history",
+      "Save & organize articles",
+      "PDF export",
     ],
-    buttonText: "Get Started",
+    buttonText: "Start Free Trial",
   },
   {
-    name: "Enterprise",
-    description: "For large organizations",
-    price: 249,
+    name: "Team",
+    description: "For organizations",
+    price: 29,
     features: [
-      "Unlimited AI agents",
-      "Unlimited contacts",
-      "Custom reporting",
-      "24/7 dedicated support",
-      "Unlimited automation workflows",
-      "Advanced security features",
-      "Custom AI training",
+      "Everything in Pro",
+      "Up to 10 team members",
+      "Shared collections",
+      "Team analytics",
+      "Priority support",
+      "API access",
+      "Custom integrations",
     ],
     buttonText: "Contact Sales",
     buttonVariant: "outline",
@@ -239,41 +230,41 @@ export type Testimonial = {
 export const testimonials: Testimonial[] = [
   {
     content:
-      "AutoCRM has transformed how we manage customer relationships. The AI agents have saved our team countless hours on routine tasks, allowing us to focus on strategic initiatives.",
+      "NewsAi has completely changed how I stay informed. Instead of scrolling through endless feeds, I get exactly the news I care about. The personalization is incredible!",
     author: {
-      name: "Sarah Johnson",
-      role: "Head of Customer Success",
-      company: "TechGrowth Inc.",
+      name: "Sarah Chen",
+      role: "Product Manager",
+      company: "TechStart Co.",
       image: "/placeholder.svg?height=100&width=100",
     },
   },
   {
     content:
-      "The predictive insights feature has been a game-changer for our sales team. We're now able to anticipate customer needs before they even express them.",
+      "As a journalist, I use NewsAi daily to track stories across multiple domains. The real-time updates and multi-source aggregation save me hours of research time.",
     author: {
-      name: "Michael Chen",
-      role: "Sales Director",
-      company: "Innovate Solutions",
+      name: "Marcus Johnson",
+      role: "Senior Journalist",
+      company: "Digital News Network",
       image: "/placeholder.svg?height=100&width=100",
     },
   },
   {
     content:
-      "Implementation was seamless, and the ROI was evident within the first month. Our customer satisfaction scores have increased by 35% since adopting AutoCRM.",
+      "The ability to save and organize articles has transformed my research workflow. I can now easily reference past stories and share them with my team.",
     author: {
-      name: "Emily Rodriguez",
-      role: "CTO",
-      company: "FutureTech",
+      name: "Lisa Rodriguez",
+      role: "Research Director",
+      company: "Analytics Firm",
       image: "/placeholder.svg?height=100&width=100",
     },
   },
   {
     content:
-      "The workflow automation capabilities are incredibly intuitive. We've been able to create complex customer journeys without writing a single line of code.",
+      "NewsAi's filtering options are fantastic. I can focus on credible sources and avoid misinformation. It's exactly what I needed for staying informed.",
     author: {
-      name: "David Wilson",
-      role: "Marketing Manager",
-      company: "Growth Ventures",
+      name: "David Thompson",
+      role: "Business Analyst",
+      company: "Investment Group",
       image: "/placeholder.svg?height=100&width=100",
     },
   },

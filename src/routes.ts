@@ -5,6 +5,7 @@ export const authRoutes = [
   "/signup",
   "/forgot-password",
   "/reset-password",
+  "/verify-mail",
 ];
 
 export const DEFAULT_LOGOUT_REDIRECT = "/signin";

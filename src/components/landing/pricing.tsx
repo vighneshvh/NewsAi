@@ -4,14 +4,17 @@ import { pricingPlans } from "@/lib/constants";
 
 export default function Pricing() {
   return (
-    <section id='pricing' className='py-20 bg-muted/30 dark:bg-background'>
+    <section
+      id='pricing'
+      className='py-20 md:py-28 bg-muted/30 dark:bg-background'>
       <div className='container px-4 md:px-6'>
-        <div className='text-center mb-12'>
+        <div className='text-center mb-16'>
           <h2 className='text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl'>
             Simple, Transparent Pricing
           </h2>
-          <p className='mt-4 text-xl text-muted-foreground max-w-[700px] mx-auto'>
-            Choose the plan that's right for your business
+          <p className='mt-4 text-lg text-muted-foreground max-w-[700px] mx-auto'>
+            Choose the perfect plan for your news consumption needs. Start free,
+            upgrade anytime.
           </p>
         </div>
 
@@ -50,13 +53,15 @@ export default function Pricing() {
           ))}
         </div>
 
-        <div className='mt-12 text-center bg-muted/50 dark:bg-muted/10 p-6 rounded-lg max-w-3xl mx-auto'>
-          <h3 className='text-xl font-bold'>Need a custom solution?</h3>
-          <p className='mt-2 text-muted-foreground'>
-            Contact our sales team for a tailored plan that meets your specific
-            requirements.
+        <div className='mt-16 text-center bg-gradient-to-r from-primary/10 to-primary/5 dark:from-primary/20 dark:to-primary/10 p-8 rounded-2xl max-w-3xl mx-auto border border-primary/20'>
+          <h3 className='text-2xl font-bold'>Looking for something more?</h3>
+          <p className='mt-3 text-muted-foreground text-lg'>
+            Contact our team for enterprise solutions with custom features, API
+            access, and dedicated support.
           </p>
-          <Button className='mt-4'>Schedule a Call</Button>
+          <Button className='mt-6' size='lg'>
+            Get in Touch
+          </Button>
         </div>
       </div>
     </section>

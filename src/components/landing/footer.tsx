@@ -21,14 +21,15 @@ export default function Footer() {
                 strokeLinecap='round'
                 strokeLinejoin='round'
                 className='h-6 w-6 text-primary'>
-                <path d='M12 2a10 10 0 1 0 10 10H12V2Z' />
-                <path d='M12 12 2.1 9.1a10 10 0 0 0 9.8 12.9L12 12Z' />
-                <path d='M12 12 9.1 2.1a10 10 0 0 0 12.9 9.8L12 12Z' />
+                <path d='M4 11a9 9 0 0 1 9 9' />
+                <path d='M4 4a16 16 0 0 1 16 16' />
+                <circle cx='5' cy='19' r='1' />
               </svg>
-              <span className='text-xl font-bold'>AutoCRM</span>
+              <span className='text-xl font-bold'>NewsAi</span>
             </div>
             <p className='text-muted-foreground mb-4'>
-              Transforming customer relationships with intelligent automation.
+              Your personalized news feed powered by AI. Stay informed with
+              curated content from thousands of trusted sources.
             </p>
             <div className='flex space-x-4'>
               {footerNavigation.social.map((item) => {
@@ -96,7 +97,7 @@ export default function Footer() {
 
         <div className='border-t mt-12 pt-8 flex flex-col md:flex-row justify-between items-center'>
           <p className='text-sm text-muted-foreground'>
-            © {new Date().getFullYear()} AutoCRM. All rights reserved.
+            © {new Date().getFullYear()} NewsAi. All rights reserved.
           </p>
           <div className='flex gap-4 mt-4 md:mt-0'>
             {footerNavigation.legal.map((item) => (

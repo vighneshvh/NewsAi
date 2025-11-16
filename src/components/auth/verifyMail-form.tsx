@@ -38,11 +38,11 @@ function VerifyMailForm() {
 
       return response;
     } catch (error) {
-      // @ts-expect-error
+      // @ts-expect-error error response
       setError(error?.response?.data?.error);
       return;
     }
-  }, [token]);
+  }, [token, error, router, success]);
 
   useEffect(() => {
     onSubmit();
@@ -52,7 +52,6 @@ function VerifyMailForm() {
     <Authcard header='Verifying mail please wait..'>
       <div className='w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin'></div>
       <CardFooter>
-        {" "}
         <FormError message={error} />
         <FormSuccess message={success} />
       </CardFooter>

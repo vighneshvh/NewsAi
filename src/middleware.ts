@@ -10,7 +10,7 @@ import { NextResponse } from "next/server";
 
 const { auth } = NextAuth(authConfig);
 
-// @ts-expect-error
+// @ts-expect-error error
 export default auth((req) => {
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;

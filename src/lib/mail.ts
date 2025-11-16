@@ -118,7 +118,7 @@ const confirmChangeMailTemplate = (otp: string) => `
 `;
 
 export const sendPasswordResetEmail = async (email: string, token: string) => {
-  const resetLink = `http://localhost:3000/reset-password?token=${token}`;
+  const resetLink = `${process.env.NEXT_PUBLIC_APP_URL}/reset-password?token=${token}`;
   try {
     await transporter.sendMail({
       from: process.env.SMTP_USER,
@@ -134,7 +134,7 @@ export const sendPasswordResetEmail = async (email: string, token: string) => {
 };
 
 export const sendVerificationEmail = async (email: string, token: string) => {
-  const confirmLink = `http://localhost:3000/verify-mail?token=${token}`;
+  const confirmLink = `${process.env.NEXT_PUBLIC_APP_URL}/verify-mail?token=${token}`;
   try {
     await transporter.sendMail({
       from: process.env.SMTP_USER,

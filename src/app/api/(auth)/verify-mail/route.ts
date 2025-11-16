@@ -32,6 +32,8 @@ export async function POST(req: Request) {
     .from(users)
     .where(eq(users.email, existingToken.email));
 
+  console.log(existingUser);
+
   if (!existingUser) {
     return NextResponse.json(
       { error: "Email does not exist" },

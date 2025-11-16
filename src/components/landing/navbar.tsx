@@ -27,11 +27,11 @@ export default function Navbar() {
             strokeLinecap='round'
             strokeLinejoin='round'
             className='h-6 w-6 text-primary'>
-            <path d='M12 2a10 10 0 1 0 10 10H12V2Z' />
-            <path d='M12 12 2.1 9.1a10 10 0 0 0 9.8 12.9L12 12Z' />
-            <path d='M12 12 9.1 2.1a10 10 0 0 0 12.9 9.8L12 12Z' />
+            <path d='M4 11a9 9 0 0 1 9 9' />
+            <path d='M4 4a16 16 0 0 1 16 16' />
+            <circle cx='5' cy='19' r='1' />
           </svg>
-          <span className='text-xl font-bold'>AutoCRM</span>
+          <span className='text-xl font-bold'>NewsAi</span>
         </div>
 
         {/* Desktop Navigation */}
@@ -50,13 +50,16 @@ export default function Navbar() {
 
         <div className='hidden md:flex items-center gap-4'>
           <ThemeToggle />
-          <Button variant='outline' size='sm'>
-            Log in
-          </Button>
-          <Button size='sm'>Get Started</Button>
+          <Link href='/signin'>
+            <Button variant='outline' size='sm'>
+              Log in
+            </Button>
+          </Link>
+          <Link href='/signup'>
+            <Button size='sm'>Get Started</Button>
+          </Link>
         </div>
 
-        {/* Mobile Menu Button */}
         <button className='md:hidden' onClick={toggleMenu}>
           {isMenuOpen ? (
             <X className='h-6 w-6' />
@@ -85,12 +88,16 @@ export default function Navbar() {
               <div className='flex justify-start py-2'>
                 <ThemeToggle />
               </div>
-              <Button variant='outline' size='sm' className='w-full'>
-                Log in
-              </Button>
-              <Button size='sm' className='w-full'>
-                Get Started
-              </Button>
+              <Link href='/signin'>
+                <Button variant='outline' size='sm' className='w-full'>
+                  Log in
+                </Button>
+              </Link>
+              <Link href='/signup'>
+                <Button size='sm' className='w-full'>
+                  Get Started
+                </Button>
+              </Link>
             </div>
           </nav>
         </div>
