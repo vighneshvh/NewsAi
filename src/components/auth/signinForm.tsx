@@ -48,7 +48,7 @@ function SigninForm() {
         console.log(response.data);
         if (response.status === 200) {
           router.push("/onboard");
-          window.location.href = "/onboard";
+          window.location.reload();
         }
         if (response.status === 201) {
           setSuccess(response.data.success);
