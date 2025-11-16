@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Vike",
-  description: "Ai First CRM",
+  title: "NewsAI",
+  description: "Ai First News Feed",
 };
 
 export default function RootLayout({
@@ -33,6 +34,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange>
           {children}
+          <Toaster theme='dark' position='bottom-right' />
         </ThemeProvider>
       </body>
     </html>

@@ -121,3 +121,25 @@ export const changeEmailToken = pgTable(
     };
   }
 );
+
+export const subscribedTopics = pgTable(
+  "subscribed_topics",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    userId: text("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    topic: text("topic").notNull(),
+    createdAt: timestamp("createdAt", { mode: "date" })
+      .notNull()
+      .$defaultFn(() => new Date()),
+  },
+  (table) => {
+    return {
+      userIdIdx: index("user_id_idx").on(table.userId),
+      userTopicUnique: uniqueIndex().on(table.userId, table.topic),
+    };
+  }
+);
