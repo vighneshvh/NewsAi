@@ -116,16 +116,8 @@ export const navItems: NavItem[] = [
     href: "#features",
   },
   {
-    title: "Pricing",
-    href: "#pricing",
-  },
-  {
-    title: "Testimonials",
-    href: "#testimonials",
-  },
-  {
-    title: "Contact",
-    href: "#contact",
+    title: "FAQ",
+    href: "#faq",
   },
 ];
 

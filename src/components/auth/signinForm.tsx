@@ -47,7 +47,8 @@ function SigninForm() {
         const response = await axios.post("/api/signin", values);
         console.log(response.data);
         if (response.status === 200) {
-          router.push("/dashboard");
+          router.push("/onboard");
+          window.location.href = "/onboard";
         }
         if (response.status === 201) {
           setSuccess(response.data.success);

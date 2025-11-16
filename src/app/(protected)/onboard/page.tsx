@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { Check } from "lucide-react";
@@ -28,6 +28,25 @@ export default function Onboard() {
   const router = useRouter();
   const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
+  const [isInitializing, setIsInitializing] = useState(true);
+
+  useEffect(() => {
+    const checkExistingTopics = async () => {
+      try {
+        const response = await axios.get("/api/topics/subscribe");
+        const topics = response.data.topics || [];
+        if (topics.length > 0) {
+          router.push("/dashboard");
+        }
+      } catch (error) {
+        console.error("Error fetching topics:", error);
+      } finally {
+        setIsInitializing(false);
+      }
+    };
+
+    checkExistingTopics();
+  }, [router]);
 
   const handleTopicToggle = (topic: string) => {
     setSelectedTopics((prev) =>
@@ -53,6 +72,14 @@ export default function Onboard() {
       setLoading(false);
     }
   };
+
+  if (isInitializing) {
+    return (
+      <div className='min-h-screen bg-background flex items-center justify-center'>
+        <div className='text-foreground'>Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <div className='min-h-screen bg-background p-8'>
