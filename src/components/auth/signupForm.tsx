@@ -21,12 +21,14 @@ import axios, { AxiosError } from "axios";
 import FormSuccess from "./formSuccess";
 import FormError from "./formError";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 function SignupForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof SignUpSchema>>({
     resolver: zodResolver(SignUpSchema),
@@ -50,9 +52,10 @@ function SignupForm() {
           return;
         }
 
-        setSuccess(
-          data?.success || "Account created! Please check your email to verify."
-        );
+        setSuccess(data?.success || "Email successfully verified");
+        setTimeout(() => {
+          router.push("/onboard");
+        }, 1500);
       } catch (error) {
         const axiosError = error as AxiosError<{ error?: string }>;
         setError(axiosError.response?.data?.error || "Something went wrong");

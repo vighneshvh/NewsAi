@@ -26,14 +26,13 @@ function VerifyMailForm() {
       const response = await axios.post(`api/verify-mail`, { token });
 
       if (response.data.success) {
-        setSuccess(success);
+        setSuccess("Email successfully verified");
+        setTimeout(() => {
+          router.push("/onboard");
+        }, 1500);
       }
       if (response.data.error) {
-        setError(error);
-      }
-
-      if (response.status === 200) {
-        router.push("/signin");
+        setError(response.data.error);
       }
 
       return response;
@@ -42,7 +41,7 @@ function VerifyMailForm() {
       setError(error?.response?.data?.error);
       return;
     }
-  }, [token, error, router, success]);
+  }, [token, router]);
 
   useEffect(() => {
     onSubmit();

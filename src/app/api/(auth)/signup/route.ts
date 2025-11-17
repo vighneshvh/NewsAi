@@ -4,8 +4,6 @@ import { hash } from "bcryptjs";
 import { db } from "@/db";
 import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
-import { generateVerificationToken } from "@/lib/token";
-import { sendVerificationEmail } from "@/lib/mail";
 
 export async function POST(req: Request) {
   try {
@@ -40,17 +38,11 @@ export async function POST(req: Request) {
       name,
       email,
       password: hashedPassword,
+      emailVerified: new Date(),
     });
 
-    const verificationToken = await generateVerificationToken(email);
-
-    await sendVerificationEmail(
-      verificationToken.email,
-      verificationToken.token
-    );
-
     return NextResponse.json(
-      { success: "Confirmation email sent" },
+      { success: "Email successfully verified" },
       { status: 200 }
     );
   } catch (error) {

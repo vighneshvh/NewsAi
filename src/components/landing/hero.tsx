@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Hero() {
   return (
@@ -26,9 +27,11 @@ export default function Hero() {
               </p>
             </div>
             <div className='flex flex-col gap-3 min-[400px]:flex-row'>
-              <Button size='lg' className='gap-2'>
-                Start Reading <ArrowRight className='h-4 w-4' />
-              </Button>
+              <Link href='/signup'>
+                <Button size='lg' className='gap-2'>
+                  Start Reading <ArrowRight className='h-4 w-4' />
+                </Button>
+              </Link>
             </div>
             <div className='flex items-center gap-3 text-sm pt-2'>
               <div className='flex -space-x-2'>

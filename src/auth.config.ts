@@ -25,6 +25,8 @@ export default {
 
           if (!user || !user.password) return null;
 
+          if (!user.emailVerified) return null;
+
           const passwordsMatch = await compare(password, user.password);
 
           if (passwordsMatch) return user;

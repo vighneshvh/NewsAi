@@ -15,21 +15,17 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
-import { useState, useTransition, useEffect } from "react";
+import { useState, useTransition } from "react";
 import Authcard from "./authcard";
-import axios from "axios";
-import { useRouter } from "next/navigation";
 import FormSuccess from "./formSuccess";
 import FormError from "./formError";
-import { signIn as nextAuthSignIn } from "next-auth/react";
+import { signIn } from "next-auth/react";
 
 function SigninForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
-  const [shouldRedirect, setShouldRedirect] = useState(false);
   const [isPending, startTransition] = useTransition();
-  const router = useRouter();
 
   const form = useForm<z.infer<typeof SignInSchema>>({
     resolver: zodResolver(SignInSchema),
@@ -39,38 +35,25 @@ function SigninForm() {
     },
   });
 
-  useEffect(() => {
-    if (shouldRedirect) {
-      window.location.reload();
-      router.push("/onboard");
-    }
-  }, [shouldRedirect, router]);
-
   function onSubmit(values: z.infer<typeof SignInSchema>) {
     setError("");
     setSuccess("");
 
     startTransition(async () => {
       try {
-        const response = await axios.post("/api/signin", values);
-
-        if (response.data.success === true) {
-          setSuccess(response.data.success);
-          setShouldRedirect(true);
-        }
-
-        if (response.status === 201) {
-          setSuccess(response.data.success);
-        }
-
-        if (response.data.error) {
-          setError(response.data.error);
-        }
-
-        return response.data;
-      } catch (error) {
+        const result = await signIn("credentials", {
+          email: values.email,
+          password: values.password,
+          redirect: true,
+          redirectTo: "/onboard",
+        });
         // @ts-expect-error error
-        setError(error.response?.data?.error);
+        if (result?.error) {
+          // @ts-expect-error error
+          setError(result.error);
+        }
+      } catch (error) {
+        setError("Something went wrong");
       }
     });
   }
@@ -162,7 +145,7 @@ function SigninForm() {
 
         <Button
           type='button'
-          onClick={() => nextAuthSignIn("google", { redirectTo: "/dashboard" })}
+          onClick={() => signIn("google", { redirectTo: "/onboard" })}
           className='w-full'
           variant='outline'>
           <svg className='w-4 h-4 mr-2' viewBox='0 0 24 24'>
