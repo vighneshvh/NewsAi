@@ -10,4 +10,4 @@ export const authRoutes = [
 
 export const DEFAULT_LOGOUT_REDIRECT = "/signin";
 
-export const DEFAULT_LOGIN_REDIRECT = "/onboard";
+export const DEFAULT_LOGIN_REDIRECT = "/news";

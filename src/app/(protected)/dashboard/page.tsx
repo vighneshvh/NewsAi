@@ -48,6 +48,10 @@ export default function Dashboard() {
     }
   }, [router]);
 
+  const handleViewNews = () => {
+    router.push("/news");
+  };
+
   useEffect(() => {
     fetchUserTopics();
   }, [fetchUserTopics]);
@@ -88,20 +92,45 @@ export default function Dashboard() {
   }
 
   return (
-    <div className='min-h-screen bg-background p-8'>
+    <div className='min-h-screen bg-background p-4 sm:p-6 lg:p-8'>
       <div className='max-w-4xl mx-auto'>
-        <div className='mb-12'>
-          <h1 className='text-4xl font-bold text-foreground mb-2'>
-            Your Dashboard
+        <div className='text-center mb-8 sm:mb-12'>
+          <h1 className='text-4xl sm:text-5xl font-bold text-foreground mb-2'>
+            NewsAi
           </h1>
-          <p className='text-muted-foreground'>Manage your selected topics</p>
+          <p className='text-muted-foreground'>
+            Your personalized news dashboard
+          </p>
         </div>
 
-        <div className='bg-card rounded-lg p-8 shadow-lg border border-border'>
-          <h2 className='text-xl font-semibold text-foreground mb-6'>
+        <div className='bg-card rounded-lg p-6 sm:p-8 shadow-lg border border-border mb-6'>
+          <h2 className='text-lg sm:text-xl font-semibold text-foreground mb-6'>
+            All Topics
+          </h2>
+          <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 mb-8'>
+            {AVAILABLE_TOPICS.map((topic) => (
+              <button
+                key={topic}
+                onClick={() => handleTopicToggle(topic)}
+                className={`relative p-4 rounded-lg font-medium transition-all duration-200 flex items-center justify-between ${
+                  selectedTopics.includes(topic)
+                    ? "bg-foreground text-background border border-foreground"
+                    : "bg-muted text-foreground hover:bg-muted/80 border border-border"
+                }`}>
+                <span>{topic}</span>
+                {selectedTopics.includes(topic) && (
+                  <Check size={18} className='ml-2' />
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className='bg-card rounded-lg p-6 sm:p-8 shadow-lg border border-border mb-6'>
+          <h2 className='text-lg sm:text-xl font-semibold text-foreground mb-6'>
             Selected Topics
           </h2>
-          <div className='flex flex-wrap gap-2'>
+          <div className='flex flex-wrap gap-2 mb-8'>
             {selectedTopics.map((topic) => (
               <div
                 key={topic}
@@ -109,6 +138,34 @@ export default function Dashboard() {
                 {topic}
               </div>
             ))}
+          </div>
+        </div>
+
+        <div className='flex flex-col sm:flex-row gap-4 items-center justify-between'>
+          <div className='text-muted-foreground'>
+            <span className='font-semibold text-foreground'>
+              {selectedTopics.length}
+            </span>{" "}
+            topic{selectedTopics.length !== 1 ? "s" : ""} selected
+          </div>
+
+          <div className='flex gap-4'>
+            <button
+              onClick={handleSaveTopics}
+              disabled={loading || selectedTopics.length === 0}
+              className={`px-6 py-3 rounded-lg font-semibold transition-all duration-200 ${
+                saved
+                  ? "bg-foreground text-background"
+                  : "bg-foreground text-background hover:bg-foreground/90 disabled:bg-muted disabled:text-muted-foreground disabled:cursor-not-allowed"
+              }`}>
+              {loading ? "Saving..." : saved ? "✓ Saved" : "Save Topics"}
+            </button>
+
+            <button
+              onClick={handleViewNews}
+              className='px-6 py-3 bg-muted text-foreground rounded-lg font-semibold hover:bg-muted/80 transition-all duration-200'>
+              View News
+            </button>
           </div>
         </div>
 

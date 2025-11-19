@@ -36,7 +36,7 @@ export default function Onboard() {
         const response = await axios.get("/api/topics/subscribe");
         const topics = response.data.topics || [];
         if (topics.length > 0) {
-          router.push("/dashboard");
+          router.push("/news");
         }
       } catch (error) {
         console.error("Error fetching topics:", error);
@@ -64,7 +64,7 @@ export default function Onboard() {
     try {
       await axios.post("/api/topics/subscribe", { topics: selectedTopics });
       toast.success("Topics saved successfully");
-      router.push("/dashboard");
+      router.push("/news");
     } catch (error) {
       console.error("Error saving topics:", error);
       toast.error("Failed to save topics");
@@ -82,22 +82,22 @@ export default function Onboard() {
   }
 
   return (
-    <div className='min-h-screen bg-background p-8'>
+    <div className='min-h-screen bg-background p-4 sm:p-6 lg:p-8'>
       <div className='max-w-4xl mx-auto'>
-        <div className='mb-12'>
-          <h1 className='text-4xl font-bold text-foreground mb-2'>
+        <div className='mb-8 sm:mb-12'>
+          <h1 className='text-3xl sm:text-4xl font-bold text-foreground mb-2'>
             Get Started
           </h1>
-          <p className='text-muted-foreground'>
+          <p className='text-sm sm:text-base text-muted-foreground'>
             Select at least one topic to personalize your news feed
           </p>
         </div>
 
-        <div className='bg-card rounded-lg p-8 shadow-lg border border-border'>
-          <h2 className='text-lg font-semibold text-foreground mb-6'>
+        <div className='bg-card rounded-lg p-6 sm:p-8 shadow-lg border border-border'>
+          <h2 className='text-base sm:text-lg font-semibold text-foreground mb-6'>
             Choose Your Interests
           </h2>
-          <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8'>
+          <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 mb-8'>
             {AVAILABLE_TOPICS.map((topic) => (
               <button
                 key={topic}
@@ -116,7 +116,7 @@ export default function Onboard() {
           </div>
 
           <div className='flex flex-col sm:flex-row gap-4 items-center justify-between'>
-            <div className='text-muted-foreground'>
+            <div className='text-sm sm:text-base text-muted-foreground'>
               <span className='font-semibold text-foreground'>
                 {selectedTopics.length}
               </span>{" "}
@@ -126,7 +126,7 @@ export default function Onboard() {
             <button
               onClick={handleSaveTopics}
               disabled={loading || selectedTopics.length === 0}
-              className={`px-8 py-3 rounded-lg font-semibold transition-all duration-200 ${
+              className={`w-full sm:w-auto px-6 sm:px-8 py-3 rounded-lg font-semibold transition-all duration-200 ${
                 loading
                   ? "bg-muted text-muted-foreground cursor-not-allowed"
                   : selectedTopics.length === 0
