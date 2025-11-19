@@ -71,13 +71,25 @@ export default function Dashboard() {
 
     setLoading(true);
     try {
-      await axios.post("/api/topics/subscribe", { topics: selectedTopics });
-      setSaved(true);
-      toast.success("Topics saved successfully");
-      setTimeout(() => setSaved(false), 3000);
+      const response = await axios.post("/api/topics/subscribe", {
+        topics: selectedTopics,
+        action: "replace",
+      });
+      
+      if (response.data.success && response.data.topics) {
+        setSelectedTopics(response.data.topics);
+        setSaved(true);
+        toast.success("Topics saved successfully");
+        setTimeout(() => setSaved(false), 3000);
+      } else {
+        toast.error("Failed to save topics: Invalid response");
+      }
     } catch (error) {
       console.error("Error saving topics:", error);
-      toast.error("Failed to save topics");
+      const errorMessage = axios.isAxiosError(error)
+        ? error.response?.data?.error || "Failed to save topics"
+        : "Failed to save topics";
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }

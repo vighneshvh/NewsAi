@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { topics } = await request.json();
+    const { topics, action = "replace" } = await request.json();
 
     if (!Array.isArray(topics) || topics.length === 0) {
       return NextResponse.json(
@@ -21,26 +21,84 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const userId = session.user.id || session.user.email;
+    const userId = session.user.id;
 
-    await db
-      .delete(subscribedTopics)
-      .where(eq(subscribedTopics.userId, userId));
+    if (!userId) {
+      return NextResponse.json(
+        { error: "User ID not found in session" },
+        { status: 401 }
+      );
+    }
 
-    const insertedTopics = await db
-      .insert(subscribedTopics)
-      .values(
-        topics.map((topic: string) => ({
-          userId,
-          topic,
-        }))
-      )
-      .returning();
+    if (action === "replace") {
+      // Replace all topics (original behavior)
+      await db
+        .delete(subscribedTopics)
+        .where(eq(subscribedTopics.userId, userId));
 
-    return NextResponse.json(
-      { success: true, topics: insertedTopics },
-      { status: 200 }
-    );
+      const insertedTopics = await db
+        .insert(subscribedTopics)
+        .values(
+          topics.map((topic: string) => ({
+            userId,
+            topic,
+          }))
+        )
+        .returning();
+
+      return NextResponse.json(
+        { success: true, topics: insertedTopics.map((t) => t.topic) },
+        { status: 200 }
+      );
+    } else if (action === "add") {
+      // Add new topics (ignore duplicates)
+      const insertedTopics = await db
+        .insert(subscribedTopics)
+        .values(
+          topics.map((topic: string) => ({
+            userId,
+            topic,
+          }))
+        )
+        .onConflictDoNothing()
+        .returning();
+
+      // Fetch all topics for the user
+      const allUserTopics = await db
+        .select()
+        .from(subscribedTopics)
+        .where(eq(subscribedTopics.userId, userId));
+
+      return NextResponse.json(
+        { success: true, topics: allUserTopics.map((t) => t.topic) },
+        { status: 200 }
+      );
+    } else if (action === "remove") {
+      // Remove specific topics
+      const topicsToRemove = topics;
+
+      await db
+        .delete(subscribedTopics)
+        .where(
+          eq(subscribedTopics.userId, userId) &&
+            (topicsToRemove.length === 1
+              ? eq(subscribedTopics.topic, topicsToRemove[0])
+              : undefined)
+        );
+
+      // Fetch remaining topics
+      const remainingTopics = await db
+        .select()
+        .from(subscribedTopics)
+        .where(eq(subscribedTopics.userId, userId));
+
+      return NextResponse.json(
+        { success: true, topics: remainingTopics.map((t) => t.topic) },
+        { status: 200 }
+      );
+    }
+
+    return NextResponse.json({ error: "Invalid action" }, { status: 400 });
   } catch (error) {
     console.error("Error subscribing to topics:", error);
     return NextResponse.json(
@@ -58,7 +116,14 @@ export async function GET() {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const userId = session.user.id || session.user.email;
+    const userId = session.user.id;
+
+    if (!userId) {
+      return NextResponse.json(
+        { error: "User ID not found in session" },
+        { status: 401 }
+      );
+    }
 
     const userTopics = await db
       .select()

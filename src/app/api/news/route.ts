@@ -28,7 +28,10 @@ export async function GET(request: NextRequest) {
     }
 
     const searchParams = request.nextUrl.searchParams;
-    const topics = searchParams.get("topics")?.split(",") || [];
+    const topicsParam = searchParams.get("topics");
+    const topics = topicsParam
+      ? topicsParam.split(",").filter((t) => t.trim())
+      : [];
     const query = searchParams.get("q");
     const country = searchParams.get("country") || "us";
     const lang = searchParams.get("lang") || "en";
@@ -45,23 +48,54 @@ export async function GET(request: NextRequest) {
 
     let allArticles: GNewsArticle[] = [];
 
-    if (mode === "feed" && topics.length > 0) {
-      // Fetch news for each subscribed topic
-      const requests = topics.map((topic) =>
-        axios.get<GNewsResponse>("https://gnews.io/api/v4/search", {
-          params: {
-            q: topic.trim(),
-            lang,
-            country,
-            max: 10,
-            token: apiKey,
+    if (mode === "feed") {
+      if (topics.length === 0) {
+        return NextResponse.json(
+          {
+            error: "No topics provided for feed mode",
+            articles: [],
+            totalArticles: 0,
           },
-        })
-      );
+          { status: 200 }
+        );
+      }
 
-      const responses = await Promise.all(requests);
-      allArticles = responses.flatMap((res) => res.data.articles || []);
-    } else if (mode === "explore" && query) {
+      // Fetch news for each subscribed topic
+      try {
+        const requests = topics.map((topic) =>
+          axios.get<GNewsResponse>("https://gnews.io/api/v4/search", {
+            params: {
+              q: topic.trim(),
+              lang,
+              country,
+              max: 10,
+              token: apiKey,
+            },
+          })
+        );
+
+        const responses = await Promise.allSettled(requests);
+        allArticles = responses
+          .filter((res) => res.status === "fulfilled")
+          .flatMap((res) =>
+            res.status === "fulfilled" ? res.value.data.articles || [] : []
+          );
+      } catch (error) {
+        console.error("Error fetching topics in feed mode:", error);
+        throw error;
+      }
+    } else if (mode === "explore") {
+      if (!query || query.trim() === "") {
+        return NextResponse.json(
+          {
+            error: "Query parameter required for explore mode",
+            articles: [],
+            totalArticles: 0,
+          },
+          { status: 200 }
+        );
+      }
+
       // Explore mode with custom search
       const response = await axios.get<GNewsResponse>(
         "https://gnews.io/api/v4/search",
@@ -78,7 +112,7 @@ export async function GET(request: NextRequest) {
       allArticles = response.data.articles || [];
     } else {
       return NextResponse.json(
-        { error: "Invalid parameters for the requested mode" },
+        { error: "Invalid mode parameter" },
         { status: 400 }
       );
     }
@@ -112,6 +146,12 @@ export async function GET(request: NextRequest) {
     console.error("Error fetching news:", error);
 
     if (axios.isAxiosError(error)) {
+      console.error("Axios error details:", {
+        status: error.response?.status,
+        data: error.response?.data,
+        message: error.message,
+      });
+
       if (error.response?.status === 401) {
         return NextResponse.json(
           { error: "Invalid API key" },
@@ -124,10 +164,16 @@ export async function GET(request: NextRequest) {
           { status: 429 }
         );
       }
+      if (error.response?.status === 400) {
+        return NextResponse.json(
+          { error: error.response?.data?.message || "Invalid request to news API" },
+          { status: 400 }
+        );
+      }
     }
 
     return NextResponse.json(
-      { error: "Failed to fetch news" },
+      { error: "Failed to fetch news", articles: [], totalArticles: 0 },
       { status: 500 }
     );
   }
