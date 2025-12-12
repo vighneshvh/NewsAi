@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import {
@@ -43,7 +43,7 @@ export default function AISummaryPage() {
   const chatEndRef = useRef<HTMLDivElement>(null);
 
   // Fetch news from feed
-  const fetchNews = async () => {
+  const fetchNews = useCallback(async () => {
     setLoading(true);
     try {
       // Get user topics first
@@ -81,7 +81,7 @@ export default function AISummaryPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [router]);
 
   // Generate AI summary
   const generateSummary = async (articles: NewsArticle[]) => {
@@ -148,7 +148,7 @@ export default function AISummaryPage() {
   // Initial fetch
   useEffect(() => {
     fetchNews();
-  }, []);
+  }, [fetchNews]);
 
   if (loading) {
     return (
@@ -257,8 +257,8 @@ export default function AISummaryPage() {
                       Start a conversation about the news
                     </p>
                     <p className="text-sm text-muted-foreground mt-2">
-                      Try asking: "What are the main topics?" or "Tell me more
-                      about..."
+                      Try asking: &quot;What are the main topics?&quot; or &quot;Tell me more
+                      about...&quot;
                     </p>
                   </div>
                 </div>
