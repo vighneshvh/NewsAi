@@ -11,6 +11,7 @@ import {
   Search,
   X,
   ChevronDown,
+  Sparkles,
 } from "lucide-react";
 import { toast } from "sonner";
 import Image from "next/image";
@@ -202,6 +203,15 @@ export default function NewsPage() {
                   : "text-foreground hover:bg-muted border border-transparent hover:border-border"
               }`}>
               🔍 Explore
+            </button>
+
+            {/* AI Summary Button */}
+            <button
+              onClick={() => {
+                router.push("/ai-summary");
+              }}
+              className="w-full text-left px-4 py-3 rounded-lg font-medium transition-all duration-200 text-foreground hover:bg-muted border border-transparent hover:border-border bg-gradient-to-r from-purple-500/10 to-blue-500/10 hover:from-purple-500/20 hover:to-blue-500/20">
+              ✨ AI Summary
             </button>
 
             {/* Subscribed Topics Section */}
@@ -574,6 +584,15 @@ export default function NewsPage() {
             )}
           </div>
         </div>
+
+        {/* Floating AI Summary Button */}
+        <button
+          onClick={() => router.push("/ai-summary")}
+          className="fixed bottom-6 right-6 z-20 flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 font-medium"
+          title="AI Summary & Chat">
+          <Sparkles className="w-5 h-5" />
+          <span className="hidden sm:inline">AI Summary</span>
+        </button>
       </div>
     </div>
   );
