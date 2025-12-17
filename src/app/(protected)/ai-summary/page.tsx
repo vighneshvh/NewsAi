@@ -72,9 +72,10 @@ export default function AISummaryPage() {
       // Auto-generate summary
       if (articles.length > 0) {
         await generateSummary(articles);
-      } else {
-        toast.error("No news articles found");
-      }
+        }
+        //  else {
+      //   // toast.error("No news articles found");
+      // }
     } catch (error) {
       console.error("Error fetching news:", error);
       toast.error("Failed to fetch news");

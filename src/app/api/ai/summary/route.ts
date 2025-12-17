@@ -1,7 +1,6 @@
 import { auth } from "@/auth";
 import { NextRequest, NextResponse } from "next/server";
 
-// Define interface for better type safety
 interface NewsArticle {
   title: string;
   description: string;
@@ -36,11 +35,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 1. Format the user content (The actual data to process)
+  
     const newsContext = newsArticles
       .map(
-        (article: NewsArticle, index: number) =>
-          `Article ${index + 1}:
+        (article: NewsArticle, index: number) => `
+Article ${index + 1}
 Title: ${article.title}
 Description: ${article.description}
 Source: ${article.source.name}
@@ -48,15 +47,28 @@ Published: ${new Date(article.publishedAt).toLocaleDateString()}
 URL: ${article.url}
 ---`
       )
-      .join("\n\n");
+      .join("\n");
 
-    const systemInstruction = `You are an expert news analyst. 
-    Provide a comprehensive summary that:
-    1. Highlights the main topics and themes
+    const systemInstruction = `
+You are an expert news analyst preparing a professional intelligence briefing.
 
-    2. Identifies key trends and patterns
-    3. Provides context and connections between different stories
-    4. Keeps the summary concise but informative (around 700-800 words)`;
+MANDATORY REQUIREMENTS:
+- Produce a brief short-form analytical report of AT LEAST 400 words.
+- The output MUST be detailed but concise (20 to 30 lines maximum).
+- Do NOT generate a short or high-level summary.
+- Expand using background context, implications, and relationships between stories.
+- Maintain a neutral, professional, analytical tone.
+
+STRUCTURE (FOLLOW EXACTLY):
+1. Executive Overview
+2. Major Themes and Topics
+3. Cross-Article Connections and Patterns
+4. Emerging Trends and Implications
+5. Broader Context (Geopolitical, Economic, or Social)
+6. Concluding Insights
+
+Each section MUST contain multiple paragraphs.
+`;
 
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
@@ -66,41 +78,53 @@ URL: ${article.url}
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          // Move persona to system_instruction for better adherence
           system_instruction: {
             parts: [{ text: systemInstruction }],
           },
           contents: [
             {
               role: "user",
-              parts: [{ text: `Here are the news articles to summarize:\n\n${newsContext}` }],
+              parts: [
+                {
+                  text: `Analyze and synthesize the following news articles in detail:\n\n${newsContext}`,
+                },
+              ],
             },
           ],
           generationConfig: {
-            temperature: 0.7,
+            temperature: 0.6,
             topK: 40,
             topP: 0.95,
-            maxOutputTokens: 1024,
           },
         }),
       }
     );
 
+
     if (!response.ok) {
       const errorData = await response.json();
       console.error("Gemini API error:", JSON.stringify(errorData, null, 2));
+
       return NextResponse.json(
-        { error: "Failed to generate summary", details: errorData },
+        {
+          error: "Failed to generate summary",
+          details: errorData,
+        },
         { status: response.status }
       );
     }
+
 
     const data = await response.json();
     const candidate = data.candidates?.[0];
     const summary = candidate?.content?.parts?.[0]?.text;
 
     if (!summary) {
-      console.error("Gemini generated no text. Finish reason:", candidate?.finishReason);
+      console.error(
+        "Gemini generated no content. Finish reason:",
+        candidate?.finishReason
+      );
+
       return NextResponse.json(
         { error: "AI could not generate a summary for this content." },
         { status: 422 }
@@ -116,6 +140,7 @@ URL: ${article.url}
     );
   } catch (error) {
     console.error("Error generating summary:", error);
+
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
