@@ -3,7 +3,7 @@ import { db } from "@/db";
 import { eq } from "drizzle-orm";
 import { users, passwordResetToken } from "@/db/schema";
 import { newPasswordSchema } from "@/lib/schema";
-import { hash } from "bcryptjs";
+import {  hash} from "bcryptjs";
 
 export async function POST(req: Request) {
   try {

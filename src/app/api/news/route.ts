@@ -60,7 +60,7 @@ export async function GET(request: NextRequest) {
         );
       }
 
-      // Fetch news for each subscribed topic
+      
       try {
         const requests = topics.map((topic) =>
           axios.get<GNewsResponse>("https://gnews.io/api/v4/search", {
@@ -96,7 +96,6 @@ export async function GET(request: NextRequest) {
         );
       }
 
-      // Explore mode with custom search
       const response = await axios.get<GNewsResponse>(
         "https://gnews.io/api/v4/search",
         {
