@@ -50,7 +50,7 @@ export default function Hero() {
             <div className='relative w-full max-w-[500px] aspect-video rounded-2xl overflow-hidden shadow-2xl'>
               <div className='absolute inset-0 bg-gradient-to-br from-primary/30 to-primary/10 z-10'></div>
               <Image
-                src='/placeholder.svg?height=500&width=800'
+                src='/image.png'
                 alt='NewsAi Dashboard'
                 className='w-full h-full object-cover'
                 width={500}

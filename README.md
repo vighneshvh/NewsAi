@@ -9,34 +9,9 @@
 
 **Your Personalized AI-First News Feed**
 
-[Features](#features) • [Tech Stack](#tech-stack) • [Getting Started](#getting-started) • [Documentation](#documentation) • [Contributing](#contributing)
-
 </div>
 
----
 
-## 📖 Table of Contents
-
-- [Overview](#overview)
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Architecture](#architecture)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-  - [Environment Variables](#environment-variables)
-  - [Database Setup](#database-setup)
-  - [Running the Application](#running-the-application)
-- [Project Structure](#project-structure)
-- [API Documentation](#api-documentation)
-- [Authentication](#authentication)
-- [Database Schema](#database-schema)
-- [AI Integration](#ai-integration)
-- [Deployment](#deployment)
-- [Contributing](#contributing)
-- [License](#license)
-
----
 
 ## 🌟 Overview
 
@@ -116,7 +91,7 @@
 ## 🛠 Tech Stack
 
 ### Frontend
-- **Framework**: [Next.js 15.3.1](https://nextjs.org/) - React framework with App Router
+- **Framework**: [Next.js 15.3.6](https://nextjs.org/) - React framework with App Router
 - **Language**: [TypeScript 5.x](https://www.typescriptlang.org/) - Type-safe JavaScript
 - **Styling**: [Tailwind CSS 4](https://tailwindcss.com/) - Utility-first CSS framework
 - **UI Components**: [Radix UI](https://www.radix-ui.com/) - Accessible component primitives
@@ -639,57 +614,7 @@ If the answer isn't in the context, use your general knowledge but mention that 
 Be informative, accurate, and concise.
 ```
 
----
 
-## 🚀 Deployment
-
-### Vercel (Recommended)
-
-1. **Push to GitHub**
-```bash
-git add .
-git commit -m "Initial commit"
-git push origin main
-```
-
-2. **Deploy to Vercel**
-   - Visit [vercel.com](https://vercel.com)
-   - Import your GitHub repository
-   - Configure environment variables
-   - Deploy
-
-3. **Environment Variables**
-   Add all variables from `.env` to Vercel:
-   - Go to Project Settings → Environment Variables
-   - Add each variable
-
-4. **Database**
-   - Use a hosted PostgreSQL service (e.g., Neon, Supabase, Railway)
-   - Update `DATABASE_URL` in Vercel environment variables
-
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 🙏 Acknowledgments
-
-- **Next.js Team** - Amazing React framework
-- **Vercel** - Hosting and deployment
-- **Google** - Gemini AI API
-- **GNews** - News aggregation API
-- **Radix UI** - Accessible components
-- **Tailwind CSS** - Styling framework
-
----
-## 🗺 Roadmap
-
-<div align="center">
-
-**Made with ❤️ by the NewsAI Team**
-
-[Website](https://newsai.com) • [Twitter](https://twitter.com/newsai) • [Discord](https://discord.gg/newsai)
+[Website](https://news-ai-galaxy.vercel.app/) 
 
 </div>
